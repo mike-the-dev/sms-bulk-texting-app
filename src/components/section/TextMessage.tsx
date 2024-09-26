@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 interface TextMessageProps {
   name: string;
+  // @ts-ignore
   setTextMessage: any;
   isSyncing: boolean;
+  // @ts-ignore
   setSyncing: any;
 }
 

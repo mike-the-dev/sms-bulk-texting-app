@@ -5,7 +5,7 @@ import { setTimeout } from "timers";
 import { AuthUser, fetchUserAttributes } from "aws-amplify/auth";
 
 interface HeaderPrimaryProps {
-  toggleIsSigningOut: any;
+  toggleIsSigningOut: () => void | undefined;
   user: AuthUser | undefined;
 };
 
@@ -42,7 +42,7 @@ const HeaderPrimary: React.FC<HeaderPrimaryProps> = (props): React.ReactElement 
 
   useEffect(() => {
     if ( !state ) onMount();
-  }, []);
+  }, [state]);
 
   return (
     <div className='header-primary-container'>

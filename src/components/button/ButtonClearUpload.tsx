@@ -3,7 +3,7 @@ import React from 'react';
 interface ButtonClearUploadProps {
   label: string;
   disabled?: boolean;
-  onClick: any;
+  onClick: () => void;
 }
 
 const ButtonClearUpload: React.FC<ButtonClearUploadProps> = (props): React.ReactElement => {

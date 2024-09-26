@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { ButtonClearUpload, ButtonExcel, ButtonPrimary } from '../button';
+import { ButtonExcel, ButtonPrimary } from '../button';
 
 interface AddPhoneNumberFormProps {
   addPhoneNumber: (phoneNumber: string) => void;
-  addPhoneNumberBulk: (file: any) => void;
+  addPhoneNumberBulk: (file: File) => void;
   updateFile: (file: File) => void;
   removeFile: () => void;
   clearRows: () => void;

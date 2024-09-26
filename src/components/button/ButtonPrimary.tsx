@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ButtonPrimaryProps {
-  onClick: any;
+  onClick: () => void;
   label: string;
   disabled?: boolean;
 }

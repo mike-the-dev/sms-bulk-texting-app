@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { OverlaySigningOut } from "@/components/overlay";
+// import { OverlaySigningOut } from "@/components/overlay";
 import Confirmation from "@/components/overlay/Confirmation";
 import { HeaderPrimary } from "@/components/header";
 import { ListSimple } from "@/components/list";
@@ -28,7 +28,7 @@ export interface HomeState {
 
 export default function Home() {
   // Global state
-  const [isSigningOut, setIsSigningOut] = React.useState<boolean>(false);
+  // const [isSigningOut] = React.useState<boolean>(false);
 
   const [phoneNumbers, setPhoneNumbers] = React.useState<HomeState[]>([]);
   const [textMessage, setTextMessage] = React.useState<string>();
@@ -38,9 +38,9 @@ export default function Home() {
   const [file, setFile] = React.useState<File | null>(null);
   const [confirmation, setConfirmation] = React.useState<boolean>(false);
 
-  const toggleIsSigningOut = (): void => {
-    setIsSigningOut(prevState => !prevState);
-  };
+  // const toggleIsSigningOut = (): void => {
+  //   setIsSigningOut(prevState => !prevState);
+  // };
 
   const toggleConfirmation = (): void => {
     setConfirmation(prevState => !prevState);
@@ -82,19 +82,23 @@ export default function Home() {
     console.log('Phone number object: ', newPhoneNumber);
     setPhoneNumbers(prevState => [newPhoneNumber, ...prevState]);
   };
-
-  const addPhoneNumberBulk = (file: any): void => {
-    const csvPhoneNumbers: any = [];
+  const addPhoneNumberBulk = (file: File): void => {
+    // @ts-expect-error: We dont have types for the array yet.
+    const csvPhoneNumbers = [];
     toggleIsUploadingPhoneNumbers();
 
-    MediaUpload().parseCSV(file, (results: any) => {
+    MediaUpload().parseCSV(file, () => {
+      // @ts-expect-error: We dont have types for the array yet.
       console.log('All done!', csvPhoneNumbers);
+      // @ts-expect-error: We dont have types for the array yet.
       setPhoneNumbers(csvPhoneNumbers);
       setTimeout(() => {
         toggleIsUploadingPhoneNumbers();
       }, 5000);
-    }, (results: any) => {
+    }, (results) => {
+      // @ts-expect-error: no type for restults yet.
       if (results.data[0] === 'phone_numbers' || !results.data[0]) return;
+      // @ts-expect-error: no type for restults yet.
       let phoneNumber = results.data[0];
 
       phoneNumber = sanitizePhoneText(phoneNumber);
@@ -157,9 +161,9 @@ export default function Home() {
     >
         {({ signOut, user }) => (
           <>
-            {!isSigningOut ? null : <OverlaySigningOut />}
+            {/* {!isSigningOut ? null : <OverlaySigningOut />} */}
             {!confirmation ? null : <Confirmation toggleConfirmation={toggleConfirmation} />}
-              <HeaderPrimary user={user} toggleIsSigningOut={signOut ? signOut : undefined} />
+              <HeaderPrimary user={user} toggleIsSigningOut={signOut ? signOut : () => console.log("")} />
               <div className="p-4 sm:p-0 container mx-auto h-full flex flex-wrap justify-center content-center" style={{ marginTop: 20 }}>
               <div className="w-full lg pb-0 shadow-md rounded-md" style={{ maxWidth: 512 }}>
                 {/* Header With Logo */}
