@@ -1,0 +1,843 @@
+type GlobalSettings {
+  id: ID!
+  appName: String
+  platform: String
+  version: String
+  createdAt: String
+  updatedAt: AWSDateTime!
+}
+
+type Location {
+  id: ID!
+  county: String!
+  provider: String
+  offer(filter: ModelOfferFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelOfferConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Offer {
+  id: ID!
+  name: String
+  description: String
+  pricing: String
+  rating: Int
+  whenWillISeeResults: String
+  isThereAnyDownTime: String
+  howLongDoesItTake: String
+  howDoesItWork: String
+  anythingElseINeedToKnow: String
+  location: Location
+  image: S3Object
+  owner: String
+  visibility: Visibility
+  createdAt: String
+  offerOfferProviderId: String
+  offerLocationId: String
+  offerProvider: Provider
+  updatedAt: AWSDateTime!
+}
+
+type Provider {
+  id: ID!
+  userDetails: UserDetails
+  instagramDetails: InstagramDetails
+  nameOfProvider: String
+  nameOfPractice: String
+  providerPhoneNumber: String
+  practicePhoneNumber: String
+  description: String
+  practicingSince: String
+  schoolOfMedicine: String
+  medicalLicenseIsValid: Boolean
+  languagesSpoken: String
+  insurancesAccepted: Boolean
+  socialMedia: String
+  favoriteProcedure: String
+  schoolRank: String
+  certifications: String
+  chooseMedicineBecause: String
+  specialty: String
+  location: String
+  market: Market
+  twilioCredentials: TwilioCredentials
+  conversation: Conversation!
+  onSched: onSched
+  isSubscribedToBooking: Boolean
+  bookings(filter: ModelBookingFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBookingConnection
+  featuredImage: S3Object
+  providerImage: S3Object
+  createdAt: String
+  visibility: Visibility
+  quickReplys(filter: ModelQuickReplyFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelQuickReplyConnection
+  providerOffer(filter: ModelOfferFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelOfferConnection
+  updatedAt: AWSDateTime!
+}
+
+type Conversation {
+  initialMessage: String
+}
+
+type QuickReply {
+  id: ID!
+  quickReplyProviderId: String!
+  title: String!
+  body: String!
+  provider: Provider
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Booking {
+  id: ID!
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  time: String
+  date: String
+  utc_timestamp: String
+  bookingProviderId: String
+  provider: Provider
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type Market {
+  id: ID!
+  address: String
+  zipcode: String
+  city: String
+  neighborhood: String
+  county: String
+  state: String
+  lang: String
+  long: String
+  provider: Provider
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type TwilioCredentials {
+  accountId: String
+  serviceId: String
+  apiKey: String
+  secretKey: String
+  userId: String
+}
+
+type onSched {
+  locationId: String
+  resourceId: String
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type InstagramDetails {
+  longLiveToken: String
+  isLinked: Boolean
+  username: String
+}
+
+type UserDetails {
+  id: String
+  username: String
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+}
+
+enum Visibility {
+  public
+  private
+}
+
+input CreateBookingInput {
+  firstName: String!
+  lastName: String!
+  phoneNumber: String!
+  emailAddress: String!
+  time: String!
+  date: String!
+  tokenCreditCard: String!
+  bookingProviderId: ID!
+}
+
+input MarketInput {
+  zipcode: String
+  city: String
+  neighborhood: String
+  county: String
+  lang: String
+  long: String
+}
+
+input S3ObjectInput {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+input InstagramDetailsInput {
+  isLinked: Boolean
+  userId: String
+  longLiveToken: String
+}
+
+input UserDetailsInput {
+  username: String
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+}
+
+input CreateProviderInput {
+  id: ID
+  userDetails: UserDetailsInput
+  instagramDetails: InstagramDetailsInput
+  nameOfProvider: String
+  nameOfPractice: String
+  providerPhoneNumber: String
+  practicePhoneNumber: String
+  description: String
+  practicingSince: String
+  schoolOfMedicine: String
+  medicalLicenseIsValid: Boolean
+  languagesSpoken: String
+  insurancesAccepted: Boolean
+  socialMedia: String
+  favoriteProcedure: String
+  schoolRank: String
+  certifications: String
+  chooseMedicineBecause: String
+  location: String
+  market: MarketInput
+  twilioCredentials: TwilioCredentialsInput
+  onSched: OnSchedInput
+  featuredImage: S3ObjectInput
+  providerImage: S3ObjectInput
+  createdAt: String
+  visibility: Visibility
+  providerMarketId: ID
+}
+
+input TwilioCredentialsInput {
+  accountId: String
+  serviceId: String
+  apiKey: String
+  secretKey: String
+  userId: String
+}
+
+input OnSchedInput {
+  locationId: String
+  resourceId: String
+}
+
+type ModelProviderConnection {
+  items: [Provider]
+  nextToken: String
+}
+
+type InstagramDetailsIsLinked {
+  isLinked: Boolean!
+}
+
+input InstagramDetailsIsLinkedInput {
+  isLinked: Boolean!
+}
+
+input InstagramDetailsUnlinkInput {
+  id: ID!
+  instagramDetails: InstagramDetailsIsLinkedInput!
+}
+
+type Mutation {
+  createLambdaBooking(input: CreateBookingInput!): Booking
+  createProviders(input: [CreateProviderInput!]!): [Provider]
+  createInstagramToken(input: InstagramDetailsInput!): InstagramDetails
+  unLinkInstagram(input: InstagramDetailsUnlinkInput!): InstagramDetailsIsLinked
+  createGlobalSettings(input: CreateGlobalSettingsInput!, condition: ModelGlobalSettingsConditionInput): GlobalSettings
+  updateGlobalSettings(input: UpdateGlobalSettingsInput!, condition: ModelGlobalSettingsConditionInput): GlobalSettings
+  deleteGlobalSettings(input: DeleteGlobalSettingsInput!, condition: ModelGlobalSettingsConditionInput): GlobalSettings
+  createLocation(input: CreateLocationInput!, condition: ModelLocationConditionInput): Location
+  updateLocation(input: UpdateLocationInput!, condition: ModelLocationConditionInput): Location
+  deleteLocation(input: DeleteLocationInput!, condition: ModelLocationConditionInput): Location
+  createOffer(input: CreateOfferInput!, condition: ModelOfferConditionInput): Offer
+  updateOffer(input: UpdateOfferInput!, condition: ModelOfferConditionInput): Offer
+  deleteOffer(input: DeleteOfferInput!, condition: ModelOfferConditionInput): Offer
+  createProvider(input: CreateProviderInput!, condition: ModelProviderConditionInput): Provider
+  updateProvider(input: UpdateProviderInput!, condition: ModelProviderConditionInput): Provider
+  deleteProvider(input: DeleteProviderInput!, condition: ModelProviderConditionInput): Provider
+  createQuickReply(input: CreateQuickReplyInput!, condition: ModelQuickReplyConditionInput): QuickReply
+  updateQuickReply(input: UpdateQuickReplyInput!, condition: ModelQuickReplyConditionInput): QuickReply
+  deleteQuickReply(input: DeleteQuickReplyInput!, condition: ModelQuickReplyConditionInput): QuickReply
+  createBooking(input: CreateBookingInput!, condition: ModelBookingConditionInput): Booking
+  updateBooking(input: UpdateBookingInput!, condition: ModelBookingConditionInput): Booking
+  deleteBooking(input: DeleteBookingInput!, condition: ModelBookingConditionInput): Booking
+  createMarket(input: CreateMarketInput!, condition: ModelMarketConditionInput): Market
+  updateMarket(input: UpdateMarketInput!, condition: ModelMarketConditionInput): Market
+  deleteMarket(input: DeleteMarketInput!, condition: ModelMarketConditionInput): Market
+}
+
+type Query {
+  getProviderUsername(input: UserDetailsInput!): Provider
+  getGlobalSettings(id: ID!): GlobalSettings
+  listGlobalSettingss(filter: ModelGlobalSettingsFilterInput, limit: Int, nextToken: String): ModelGlobalSettingsConnection
+  getLocation(id: ID!): Location
+  listLocations(filter: ModelLocationFilterInput, limit: Int, nextToken: String): ModelLocationConnection
+  getOffer(id: ID!): Offer
+  listOffers(filter: ModelOfferFilterInput, limit: Int, nextToken: String): ModelOfferConnection
+  getProvider(id: ID!): Provider
+  listProviders(filter: ModelProviderFilterInput, limit: Int, nextToken: String): ModelProviderConnection
+  getQuickReply(id: ID!): QuickReply
+  listQuickReplys(filter: ModelQuickReplyFilterInput, limit: Int, nextToken: String): ModelQuickReplyConnection
+  getBooking(id: ID!): Booking
+  listBookings(filter: ModelBookingFilterInput, limit: Int, nextToken: String): ModelBookingConnection
+  getMarket(id: ID!): Market
+  listMarkets(filter: ModelMarketFilterInput, limit: Int, nextToken: String): ModelMarketConnection
+  marketByCounty(county: String, sortDirection: ModelSortDirection, filter: ModelMarketFilterInput, limit: Int, nextToken: String): ModelMarketConnection
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelGlobalSettingsConnection {
+  items: [GlobalSettings]!
+  nextToken: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+input ModelGlobalSettingsFilterInput {
+  id: ModelIDInput
+  appName: ModelStringInput
+  platform: ModelStringInput
+  version: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelGlobalSettingsFilterInput]
+  or: [ModelGlobalSettingsFilterInput]
+  not: ModelGlobalSettingsFilterInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input CreateGlobalSettingsInput {
+  id: ID
+  appName: String
+  platform: String
+  version: String
+  createdAt: String
+}
+
+input UpdateGlobalSettingsInput {
+  id: ID!
+  appName: String
+  platform: String
+  version: String
+  createdAt: String
+}
+
+input DeleteGlobalSettingsInput {
+  id: ID!
+}
+
+input ModelGlobalSettingsConditionInput {
+  appName: ModelStringInput
+  platform: ModelStringInput
+  version: ModelStringInput
+  createdAt: ModelStringInput
+  and: [ModelGlobalSettingsConditionInput]
+  or: [ModelGlobalSettingsConditionInput]
+  not: ModelGlobalSettingsConditionInput
+}
+
+type Subscription {
+  onCreateGlobalSettings: GlobalSettings @aws_subscribe(mutations: ["createGlobalSettings"])
+  onUpdateGlobalSettings: GlobalSettings @aws_subscribe(mutations: ["updateGlobalSettings"])
+  onDeleteGlobalSettings: GlobalSettings @aws_subscribe(mutations: ["deleteGlobalSettings"])
+  onCreateLocation: Location @aws_subscribe(mutations: ["createLocation"])
+  onUpdateLocation: Location @aws_subscribe(mutations: ["updateLocation"])
+  onDeleteLocation: Location @aws_subscribe(mutations: ["deleteLocation"])
+  onCreateOffer: Offer @aws_subscribe(mutations: ["createOffer"])
+  onUpdateOffer: Offer @aws_subscribe(mutations: ["updateOffer"])
+  onDeleteOffer: Offer @aws_subscribe(mutations: ["deleteOffer"])
+  onCreateProvider: Provider @aws_subscribe(mutations: ["createProvider"])
+  onUpdateProvider: Provider @aws_subscribe(mutations: ["updateProvider"])
+  onDeleteProvider: Provider @aws_subscribe(mutations: ["deleteProvider"])
+  onCreateQuickReply: QuickReply @aws_subscribe(mutations: ["createQuickReply"])
+  onUpdateQuickReply: QuickReply @aws_subscribe(mutations: ["updateQuickReply"])
+  onDeleteQuickReply: QuickReply @aws_subscribe(mutations: ["deleteQuickReply"])
+  onCreateBooking: Booking @aws_subscribe(mutations: ["createBooking"])
+  onUpdateBooking: Booking @aws_subscribe(mutations: ["updateBooking"])
+  onDeleteBooking: Booking @aws_subscribe(mutations: ["deleteBooking"])
+  onCreateMarket: Market @aws_subscribe(mutations: ["createMarket"])
+  onUpdateMarket: Market @aws_subscribe(mutations: ["updateMarket"])
+  onDeleteMarket: Market @aws_subscribe(mutations: ["deleteMarket"])
+}
+
+type ModelLocationConnection {
+  items: [Location]!
+  nextToken: String
+}
+
+input ModelLocationFilterInput {
+  id: ModelIDInput
+  county: ModelStringInput
+  provider: ModelStringInput
+  and: [ModelLocationFilterInput]
+  or: [ModelLocationFilterInput]
+  not: ModelLocationFilterInput
+}
+
+input CreateLocationInput {
+  id: ID
+  county: String!
+  provider: String
+}
+
+input UpdateLocationInput {
+  id: ID!
+  county: String
+  provider: String
+}
+
+input DeleteLocationInput {
+  id: ID!
+}
+
+input ModelLocationConditionInput {
+  county: ModelStringInput
+  provider: ModelStringInput
+  and: [ModelLocationConditionInput]
+  or: [ModelLocationConditionInput]
+  not: ModelLocationConditionInput
+}
+
+type ModelOfferConnection {
+  items: [Offer]!
+  nextToken: String
+}
+
+input ModelVisibilityInput {
+  eq: Visibility
+  ne: Visibility
+}
+
+input ModelOfferFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  description: ModelStringInput
+  pricing: ModelStringInput
+  rating: ModelIntInput
+  whenWillISeeResults: ModelStringInput
+  isThereAnyDownTime: ModelStringInput
+  howLongDoesItTake: ModelStringInput
+  howDoesItWork: ModelStringInput
+  anythingElseINeedToKnow: ModelStringInput
+  owner: ModelStringInput
+  visibility: ModelVisibilityInput
+  createdAt: ModelStringInput
+  offerOfferProviderId: ModelStringInput
+  offerLocationId: ModelStringInput
+  and: [ModelOfferFilterInput]
+  or: [ModelOfferFilterInput]
+  not: ModelOfferFilterInput
+}
+
+input CreateOfferInput {
+  id: ID
+  name: String
+  description: String
+  pricing: String
+  rating: Int
+  whenWillISeeResults: String
+  isThereAnyDownTime: String
+  howLongDoesItTake: String
+  howDoesItWork: String
+  anythingElseINeedToKnow: String
+  image: S3ObjectInput
+  owner: String
+  visibility: Visibility
+  createdAt: String
+  offerOfferProviderId: String
+  offerLocationId: String
+}
+
+input UpdateOfferInput {
+  id: ID!
+  name: String
+  description: String
+  pricing: String
+  rating: Int
+  whenWillISeeResults: String
+  isThereAnyDownTime: String
+  howLongDoesItTake: String
+  howDoesItWork: String
+  anythingElseINeedToKnow: String
+  image: S3ObjectInput
+  owner: String
+  visibility: Visibility
+  createdAt: String
+  offerOfferProviderId: String
+  offerLocationId: String
+}
+
+input DeleteOfferInput {
+  id: ID!
+}
+
+input ModelOfferConditionInput {
+  name: ModelStringInput
+  description: ModelStringInput
+  pricing: ModelStringInput
+  rating: ModelIntInput
+  whenWillISeeResults: ModelStringInput
+  isThereAnyDownTime: ModelStringInput
+  howLongDoesItTake: ModelStringInput
+  howDoesItWork: ModelStringInput
+  anythingElseINeedToKnow: ModelStringInput
+  owner: ModelStringInput
+  visibility: ModelVisibilityInput
+  createdAt: ModelStringInput
+  offerOfferProviderId: ModelStringInput
+  offerLocationId: ModelStringInput
+  and: [ModelOfferConditionInput]
+  or: [ModelOfferConditionInput]
+  not: ModelOfferConditionInput
+}
+
+input ConversationInput {
+  initialMessage: String
+}
+
+input ModelProviderFilterInput {
+  id: ModelIDInput
+  nameOfProvider: ModelStringInput
+  nameOfPractice: ModelStringInput
+  providerPhoneNumber: ModelStringInput
+  practicePhoneNumber: ModelStringInput
+  description: ModelStringInput
+  practicingSince: ModelStringInput
+  schoolOfMedicine: ModelStringInput
+  medicalLicenseIsValid: ModelBooleanInput
+  languagesSpoken: ModelStringInput
+  insurancesAccepted: ModelBooleanInput
+  socialMedia: ModelStringInput
+  favoriteProcedure: ModelStringInput
+  schoolRank: ModelStringInput
+  certifications: ModelStringInput
+  chooseMedicineBecause: ModelStringInput
+  specialty: ModelStringInput
+  location: ModelStringInput
+  isSubscribedToBooking: ModelBooleanInput
+  createdAt: ModelStringInput
+  visibility: ModelVisibilityInput
+  and: [ModelProviderFilterInput]
+  or: [ModelProviderFilterInput]
+  not: ModelProviderFilterInput
+}
+
+input UpdateProviderInput {
+  id: ID!
+  userDetails: UserDetailsInput
+  instagramDetails: InstagramDetailsInput
+  nameOfProvider: String
+  nameOfPractice: String
+  providerPhoneNumber: String
+  practicePhoneNumber: String
+  description: String
+  practicingSince: String
+  schoolOfMedicine: String
+  medicalLicenseIsValid: Boolean
+  languagesSpoken: String
+  insurancesAccepted: Boolean
+  socialMedia: String
+  favoriteProcedure: String
+  schoolRank: String
+  certifications: String
+  chooseMedicineBecause: String
+  specialty: String
+  location: String
+  twilioCredentials: TwilioCredentialsInput
+  conversation: ConversationInput
+  onSched: OnSchedInput
+  isSubscribedToBooking: Boolean
+  featuredImage: S3ObjectInput
+  providerImage: S3ObjectInput
+  createdAt: String
+  visibility: Visibility
+  providerMarketId: ID
+}
+
+input DeleteProviderInput {
+  id: ID!
+}
+
+input ModelProviderConditionInput {
+  nameOfProvider: ModelStringInput
+  nameOfPractice: ModelStringInput
+  providerPhoneNumber: ModelStringInput
+  practicePhoneNumber: ModelStringInput
+  description: ModelStringInput
+  practicingSince: ModelStringInput
+  schoolOfMedicine: ModelStringInput
+  medicalLicenseIsValid: ModelBooleanInput
+  languagesSpoken: ModelStringInput
+  insurancesAccepted: ModelBooleanInput
+  socialMedia: ModelStringInput
+  favoriteProcedure: ModelStringInput
+  schoolRank: ModelStringInput
+  certifications: ModelStringInput
+  chooseMedicineBecause: ModelStringInput
+  specialty: ModelStringInput
+  location: ModelStringInput
+  isSubscribedToBooking: ModelBooleanInput
+  createdAt: ModelStringInput
+  visibility: ModelVisibilityInput
+  and: [ModelProviderConditionInput]
+  or: [ModelProviderConditionInput]
+  not: ModelProviderConditionInput
+}
+
+type ModelQuickReplyConnection {
+  items: [QuickReply]!
+  nextToken: String
+}
+
+input ModelQuickReplyFilterInput {
+  id: ModelIDInput
+  quickReplyProviderId: ModelStringInput
+  title: ModelStringInput
+  body: ModelStringInput
+  and: [ModelQuickReplyFilterInput]
+  or: [ModelQuickReplyFilterInput]
+  not: ModelQuickReplyFilterInput
+}
+
+input CreateQuickReplyInput {
+  id: ID
+  quickReplyProviderId: String!
+  title: String!
+  body: String!
+}
+
+input UpdateQuickReplyInput {
+  id: ID!
+  quickReplyProviderId: String
+  title: String
+  body: String
+}
+
+input DeleteQuickReplyInput {
+  id: ID!
+}
+
+input ModelQuickReplyConditionInput {
+  quickReplyProviderId: ModelStringInput
+  title: ModelStringInput
+  body: ModelStringInput
+  and: [ModelQuickReplyConditionInput]
+  or: [ModelQuickReplyConditionInput]
+  not: ModelQuickReplyConditionInput
+}
+
+type ModelBookingConnection {
+  items: [Booking]!
+  nextToken: String
+}
+
+input ModelBookingFilterInput {
+  id: ModelIDInput
+  firstName: ModelStringInput
+  lastName: ModelStringInput
+  phoneNumber: ModelStringInput
+  time: ModelStringInput
+  date: ModelStringInput
+  utc_timestamp: ModelStringInput
+  bookingProviderId: ModelStringInput
+  and: [ModelBookingFilterInput]
+  or: [ModelBookingFilterInput]
+  not: ModelBookingFilterInput
+}
+
+input UpdateBookingInput {
+  id: ID!
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  time: String
+  date: String
+  utc_timestamp: String
+  bookingProviderId: String
+}
+
+input DeleteBookingInput {
+  id: ID!
+}
+
+input ModelBookingConditionInput {
+  firstName: ModelStringInput
+  lastName: ModelStringInput
+  phoneNumber: ModelStringInput
+  time: ModelStringInput
+  date: ModelStringInput
+  utc_timestamp: ModelStringInput
+  bookingProviderId: ModelStringInput
+  and: [ModelBookingConditionInput]
+  or: [ModelBookingConditionInput]
+  not: ModelBookingConditionInput
+}
+
+type ModelMarketConnection {
+  items: [Market]!
+  nextToken: String
+}
+
+input ModelMarketFilterInput {
+  id: ModelIDInput
+  address: ModelStringInput
+  zipcode: ModelStringInput
+  city: ModelStringInput
+  neighborhood: ModelStringInput
+  county: ModelStringInput
+  state: ModelStringInput
+  lang: ModelStringInput
+  long: ModelStringInput
+  and: [ModelMarketFilterInput]
+  or: [ModelMarketFilterInput]
+  not: ModelMarketFilterInput
+}
+
+input CreateMarketInput {
+  id: ID
+  address: String
+  zipcode: String
+  city: String
+  neighborhood: String
+  county: String
+  state: String
+  lang: String
+  long: String
+  marketProviderId: ID
+}
+
+input UpdateMarketInput {
+  id: ID!
+  address: String
+  zipcode: String
+  city: String
+  neighborhood: String
+  county: String
+  state: String
+  lang: String
+  long: String
+  marketProviderId: ID
+}
+
+input DeleteMarketInput {
+  id: ID!
+}
+
+input ModelMarketConditionInput {
+  address: ModelStringInput
+  zipcode: ModelStringInput
+  city: ModelStringInput
+  neighborhood: ModelStringInput
+  county: ModelStringInput
+  state: ModelStringInput
+  lang: ModelStringInput
+  long: ModelStringInput
+  and: [ModelMarketConditionInput]
+  or: [ModelMarketConditionInput]
+  not: ModelMarketConditionInput
+}

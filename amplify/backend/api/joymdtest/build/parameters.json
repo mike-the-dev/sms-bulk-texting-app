@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "joymdtest",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authjoymdtest2f9c5be3",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-joymdtest-dev-23939-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/1a3c6c915f26501cd49f0e94803519b353503502"
+}

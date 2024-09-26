@@ -1,0 +1,257 @@
+type GlobalSettings @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  appName: String
+  platform: String
+  version: String
+  createdAt: String
+}
+
+type Location @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  county: String!
+  provider: String
+  offer: [Offer] @connection(name: "locationDetails")
+}
+
+type Offer @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  name: String
+  description: String
+  pricing: String
+  rating: Int
+  whenWillISeeResults: String
+  isThereAnyDownTime: String
+  howLongDoesItTake: String
+  howDoesItWork: String
+  anythingElseINeedToKnow: String
+  location: Location @connection(name: "locationDetails")
+  image: S3Object
+  owner: String
+  visibility: Visibility
+  createdAt: String
+  offerOfferProviderId: String
+  offerLocationId: String
+  offerProvider: Provider @connection(name: "ProviderOffers")
+}
+
+type Provider @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  userDetails: UserDetails
+  instagramDetails: InstagramDetails
+  nameOfProvider: String
+  nameOfPractice: String
+  providerPhoneNumber: String
+  practicePhoneNumber: String
+  description: String
+  practicingSince: String
+  schoolOfMedicine: String
+  medicalLicenseIsValid: Boolean
+  languagesSpoken: String
+  insurancesAccepted: Boolean
+  socialMedia: String
+  favoriteProcedure: String
+  schoolRank: String
+  certifications: String
+  chooseMedicineBecause: String
+  specialty: String
+  location: String
+  market: Market @connection(name: "marketDetails")
+  twilioCredentials: TwilioCredentials
+  conversation: Conversation!
+  onSched: onSched
+  isSubscribedToBooking: Boolean
+  bookings: [Booking] @connection(name: "ProviderBookings")
+  featuredImage: S3Object
+  providerImage: S3Object
+  createdAt: String
+  visibility: Visibility
+  quickReplys: [QuickReply] @connection(name: "ProviderReplys")
+  providerOffer: [Offer] @connection(name: "ProviderOffers")
+}
+
+type Conversation {
+  initialMessage: String
+}
+
+type QuickReply @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  quickReplyProviderId: String!
+  title: String!
+  body: String!
+  provider: Provider @connection(name: "ProviderReplys")
+}
+
+type Booking @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  phoneNumber: String
+  time: String
+  date: String
+  utc_timestamp: String
+  bookingProviderId: String
+  provider: Provider @connection(name: "ProviderBookings")
+}
+
+type Market @model @auth(rules: [{ allow: private }]) @key(name: "marketByCounty" fields: ["county"], queryField: "marketByCounty") {
+  id: ID!
+  address: String
+  zipcode: String
+  city: String
+  neighborhood: String
+  county: String
+  state: String
+  lang: String
+  long: String
+  provider: Provider @connection(name: "marketDetails")
+}
+
+type TwilioCredentials {
+  accountId: String
+  serviceId: String
+  apiKey: String
+  secretKey: String
+  userId: String
+}
+
+type onSched {
+  locationId: String
+  resourceId: String
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+type InstagramDetails {
+  longLiveToken: String
+  isLinked: Boolean
+  username: String
+}
+
+type UserDetails {
+  id: String
+  username: String
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+}
+
+enum Visibility {
+  public
+  private
+}
+
+input CreateBookingInput {
+	firstName: String!
+	lastName: String!
+	phoneNumber: String!
+  emailAddress: String!
+	time: String!
+	date: String!
+  tokenCreditCard: String!
+	bookingProviderId: ID!
+}
+
+input MarketInput {
+	zipcode: String
+	city: String
+	neighborhood: String
+	county: String
+	lang: String
+	long: String
+}
+
+input S3ObjectInput {
+	bucket: String!
+	region: String!
+	key: String!
+}
+
+input InstagramDetailsInput {
+  isLinked: Boolean
+  userId: String
+  longLiveToken: String
+}
+
+input UserDetailsInput {
+  username: String
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+}
+
+input CreateProviderInput {
+	id: ID
+  userDetails: UserDetailsInput,
+  instagramDetails: InstagramDetailsInput
+	nameOfProvider: String
+	nameOfPractice: String
+  providerPhoneNumber: String
+  practicePhoneNumber: String
+	description: String
+	practicingSince: String
+	schoolOfMedicine: String
+	medicalLicenseIsValid: Boolean
+	languagesSpoken: String
+	insurancesAccepted: Boolean
+	socialMedia: String
+	favoriteProcedure: String
+	schoolRank: String
+	certifications: String
+	chooseMedicineBecause: String
+	location: String
+	market: MarketInput
+  twilioCredentials: TwilioCredentialsInput
+  onSched: OnSchedInput
+	featuredImage: S3ObjectInput
+	providerImage: S3ObjectInput
+	createdAt: String
+	visibility: Visibility
+}
+
+input TwilioCredentialsInput {
+  accountId: String
+  serviceId: String
+  apiKey: String
+  secretKey: String
+  userId: String
+}
+
+input OnSchedInput {
+	locationId: String
+  resourceId: String
+}
+
+type ModelProviderConnection {
+	items: [Provider]
+	nextToken: String
+}
+
+type InstagramDetailsIsLinked {
+  isLinked: Boolean!
+}
+
+input InstagramDetailsIsLinkedInput {
+  isLinked: Boolean!
+}
+
+input InstagramDetailsUnlinkInput {
+  id: ID!
+  instagramDetails: InstagramDetailsIsLinkedInput!
+}
+
+type Mutation {
+  createLambdaBooking(input: CreateBookingInput!): Booking @function(name: "createBooking-${env}")
+  createProviders(input: [CreateProviderInput!]!): [Provider] @function(name: "providers-${env}")
+  createInstagramToken(input: InstagramDetailsInput!): InstagramDetails @function(name: "createInstagramToken-${env}")
+  unLinkInstagram(input: InstagramDetailsUnlinkInput!): InstagramDetailsIsLinked @function(name: "unlinkInstagram-${env}")
+}
+
+type Query {
+  getProviderUsername(input: UserDetailsInput!): Provider @function(name: "joymd505908a7-${env}")
+}

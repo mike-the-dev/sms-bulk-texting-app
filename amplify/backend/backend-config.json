@@ -1,0 +1,263 @@
+{
+  "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueries2a9d6040"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "joymdtest": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3"
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authjoymdtest2f9c5be3"
+            }
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "auth": {
+    "joymdtest2f9c5be3": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "function": {
+    "AdminQueries2a9d6040": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createInstagramToken": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "joymd505908a7": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "joymd623fbc04": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "joymdee24df33": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "providers": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "unlinkInstagram": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AdminQueries2a9d6040_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries2a9d6040"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries2a9d6040_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries2a9d6040"
+        }
+      ]
+    },
+    "AMPLIFY_function_createInstagramToken_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createInstagramToken"
+        }
+      ]
+    },
+    "AMPLIFY_function_createInstagramToken_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createInstagramToken"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd505908a7_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd505908a7"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd505908a7_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd505908a7"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd623fbc04_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd623fbc04"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd623fbc04_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd623fbc04"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymdee24df33_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymdee24df33"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymdee24df33_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymdee24df33"
+        }
+      ]
+    },
+    "AMPLIFY_function_providers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "providers"
+        }
+      ]
+    },
+    "AMPLIFY_function_providers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "providers"
+        }
+      ]
+    },
+    "AMPLIFY_function_unlinkInstagram_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "unlinkInstagram"
+        }
+      ]
+    },
+    "AMPLIFY_function_unlinkInstagram_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "unlinkInstagram"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "s3e5320c4c": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
+  }
+}

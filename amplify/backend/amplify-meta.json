@@ -1,0 +1,430 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-joymdtest-dev-23939-authRole",
+      "UnauthRoleArn": "arn:aws:iam::396023048645:role/amplify-joymdtest-dev-23939-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::396023048645:role/amplify-joymdtest-dev-23939-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+      "UnauthRoleName": "amplify-joymdtest-dev-23939-unauthRole",
+      "StackName": "amplify-joymdtest-dev-23939",
+      "StackId": "arn:aws:cloudformation:us-west-2:396023048645:stack/amplify-joymdtest-dev-23939/f84a2f60-6a51-11ed-95a6-02fcb0e9b6d3",
+      "AmplifyAppId": "d2hdse5dfe5pes"
+    }
+  },
+  "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "AdminQueries2a9d6040"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway",
+      "output": {
+        "ApiName": "AdminQueries",
+        "RootUrl": "https://g6gdy4cbt0.execute-api.us-west-2.amazonaws.com/dev",
+        "ApiId": "g6gdy4cbt0"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.030Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
+        "logicalId": "apiAdminQueries"
+      }
+    },
+    "joymdtest": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3"
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authjoymdtest2f9c5be3"
+            }
+          }
+        },
+        "GraphQLAPIIdOutput": "6hh537i2ofbbpfanwwnypakboa",
+        "GraphQLAPIEndpointOutput": "https://cw5jfrcc55c5bdo7373eqp756u.appsync-api.us-west-2.amazonaws.com/graphql"
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync",
+      "lastPushTimeStamp": "2023-01-23T18:37:43.032Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apijoymdtest"
+      }
+    }
+  },
+  "auth": {
+    "joymdtest2f9c5be3": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "output": {
+        "CreatedSNSRole": "arn:aws:iam::396023048645:role/sns2f9c5be323939-dev",
+        "UserPoolId": "us-west-2_bojEFdPQl",
+        "AppClientIDWeb": "2mr9qsphfskvuc2a0ar4fe3pki",
+        "AppClientID": "7kkgq38q19ekfb5hd717bft99p",
+        "IdentityPoolId": "us-west-2:30a6044c-c29f-4bf7-be64-d755cbbc81d4",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-2:396023048645:userpool/us-west-2_bojEFdPQl",
+        "IdentityPoolName": "joymdtest2f9c5be3_identitypool_2f9c5be3__dev",
+        "UserPoolName": "joymdtest2f9c5be3_userpool_2f9c5be3"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.032Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/auth/joymdtest2f9c5be3-cloudformation-template.json",
+        "logicalId": "authjoymdtest2f9c5be3"
+      }
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups",
+      "output": {
+        "patientGroupRole": "arn:aws:iam::396023048645:role/us-west-2_bojEFdPQl-patientGroupRole"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:45.040Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/auth/userPoolGroups-cloudformation-template.json",
+        "logicalId": "authuserPoolGroups"
+      }
+    }
+  },
+  "function": {
+    "AdminQueries2a9d6040": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "joymdtest2f9c5be3"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:AdminQueries2a9d6040-dev",
+        "Name": "AdminQueries2a9d6040-dev",
+        "LambdaExecutionRole": "AdminQueries2a9d6040LambdaRole-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.035Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/AdminQueries2a9d6040-cloudformation-template.json",
+        "logicalId": "functionAdminQueries2a9d6040"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/AdminQueries2a9d6040-31642f7a4d7171677356-build.zip"
+      }
+    },
+    "createInstagramToken": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:createInstagramToken-dev",
+        "Name": "createInstagramToken-dev",
+        "LambdaExecutionRole": "joymdtestLambdaRole535694f7-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.036Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/createInstagramToken-cloudformation-template.json",
+        "logicalId": "functioncreateInstagramToken"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/createInstagramToken-4151322b626c58796332-build.zip"
+      }
+    },
+    "joymd505908a7": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:joymd505908a7-dev",
+        "Name": "joymd505908a7-dev",
+        "LambdaExecutionRole": "joymdtestLambdaRole400b7952-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.036Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/joymd505908a7-cloudformation-template.json",
+        "logicalId": "functionjoymd505908a7"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/joymd505908a7-55487970386246746f4f-build.zip"
+      }
+    },
+    "joymd623fbc04": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:joymd623fbc04-dev",
+        "Name": "joymd623fbc04-dev",
+        "LambdaExecutionRole": "joymdtestLambdaRoled79bc8d6-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.037Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/joymd623fbc04-cloudformation-template.json",
+        "logicalId": "functionjoymd623fbc04"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/joymd623fbc04-584473626970726c677a-build.zip"
+      }
+    },
+    "joymdee24df33": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:joymdee24df33-dev",
+        "Name": "joymdee24df33-dev",
+        "LambdaExecutionRole": "joymdtestLambdaRoledeaf1281-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.038Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/joymdee24df33-cloudformation-template.json",
+        "logicalId": "functionjoymdee24df33"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/joymdee24df33-3967415058786a59665a-build.zip"
+      }
+    },
+    "providers": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:providers-dev",
+        "Name": "providers-dev",
+        "LambdaExecutionRole": "joymdtestLambdaRole81f82561-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.039Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/providers-cloudformation-template.json",
+        "logicalId": "functionproviders"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/providers-664b314d384768414347-build.zip"
+      }
+    },
+    "unlinkInstagram": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "us-west-2",
+        "Arn": "arn:aws:lambda:us-west-2:396023048645:function:unlinkInstagram-dev",
+        "Name": "unlinkInstagram-dev",
+        "LambdaExecutionRole": "joymdtestLambdaRole9944c173-dev"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:43.041Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/function/unlinkInstagram-cloudformation-template.json",
+        "logicalId": "functionunlinkInstagram"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+        "s3Key": "amplify-builds/unlinkInstagram-68336a64784a526e2f47-build.zip"
+      }
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AdminQueries2a9d6040_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries2a9d6040"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueries2a9d6040_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries2a9d6040"
+        }
+      ]
+    },
+    "AMPLIFY_function_createInstagramToken_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createInstagramToken"
+        }
+      ]
+    },
+    "AMPLIFY_function_createInstagramToken_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createInstagramToken"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd505908a7_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd505908a7"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd505908a7_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd505908a7"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd623fbc04_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd623fbc04"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymd623fbc04_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymd623fbc04"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymdee24df33_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymdee24df33"
+        }
+      ]
+    },
+    "AMPLIFY_function_joymdee24df33_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "joymdee24df33"
+        }
+      ]
+    },
+    "AMPLIFY_function_providers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "providers"
+        }
+      ]
+    },
+    "AMPLIFY_function_providers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "providers"
+        }
+      ]
+    },
+    "AMPLIFY_function_unlinkInstagram_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "unlinkInstagram"
+        }
+      ]
+    },
+    "AMPLIFY_function_unlinkInstagram_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "unlinkInstagram"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "s3e5320c4c": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3",
+      "output": {
+        "BucketName": "joymdtestd0c7209139924defa85f973789a375a523939-dev",
+        "Region": "us-west-2"
+      },
+      "lastPushTimeStamp": "2023-01-23T18:37:45.221Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-joymdtest-dev-23939-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3e5320c4c"
+      }
+    }
+  }
+}

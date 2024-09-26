@@ -1,0 +1,54 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-joymdtest-dev-23939-authRole",
+      "UnauthRoleArn": "arn:aws:iam::396023048645:role/amplify-joymdtest-dev-23939-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::396023048645:role/amplify-joymdtest-dev-23939-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+      "UnauthRoleName": "amplify-joymdtest-dev-23939-unauthRole",
+      "StackName": "amplify-joymdtest-dev-23939",
+      "StackId": "arn:aws:cloudformation:us-west-2:396023048645:stack/amplify-joymdtest-dev-23939/f84a2f60-6a51-11ed-95a6-02fcb0e9b6d3",
+      "AmplifyAppId": "d2hdse5dfe5pes"
+    },
+    "categories": {
+      "auth": {
+        "joymdtest2f9c5be3": {},
+        "userPoolGroups": {}
+      },
+      "storage": {
+        "s3e5320c4c": {}
+      },
+      "function": {
+        "AdminQueries2a9d6040": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/AdminQueries2a9d6040-31642f7a4d7171677356-build.zip"
+        },
+        "createInstagramToken": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/createInstagramToken-4151322b626c58796332-build.zip"
+        },
+        "joymd505908a7": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/joymd505908a7-55487970386246746f4f-build.zip"
+        },
+        "joymd623fbc04": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/joymd623fbc04-584473626970726c677a-build.zip"
+        },
+        "joymdee24df33": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/joymdee24df33-3967415058786a59665a-build.zip"
+        },
+        "providers": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/providers-664b314d384768414347-build.zip"
+        },
+        "unlinkInstagram": {
+          "deploymentBucketName": "amplify-joymdtest-dev-23939-deployment",
+          "s3Key": "amplify-builds/unlinkInstagram-68336a64784a526e2f47-build.zip"
+        }
+      }
+    }
+  }
+}
