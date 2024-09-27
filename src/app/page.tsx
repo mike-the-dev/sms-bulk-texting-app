@@ -126,7 +126,7 @@ export default function Home() {
 
       console.log('currentUser: ', currentUser);
 
-      const response = await fetch('https://rpw7tipqa8.execute-api.us-west-2.amazonaws.com/api/twilio', {
+      const response = await fetch('https://sms.joymd.com/api/twilio', {
         method: 'POST',
         body: JSON.stringify({
           phoneNumbers: phoneNumbers,
